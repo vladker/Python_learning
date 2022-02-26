@@ -23,3 +23,12 @@ print('Values X - 100')
 print(X)
 print('End of X')
 
+# Values to plot
+plt.scatter(X[0:50, 0], X[0:50, 1], color='red', marker = 'o', label = 'Setosa')
+plt.scatter(X[50:100, 0], X[50:100, 1], color = 'blue', marker = 'x', label = 'Multicolor')
+
+# Axis names
+plt.xlabel('Lenght cup')
+plt.ylabel('Lenght wing')
+plt.legend(loc = 'upper left')
+plt.show()
