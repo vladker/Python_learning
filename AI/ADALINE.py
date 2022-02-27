@@ -154,8 +154,61 @@ class AdaptiveLinearNeuron(object):
         for i in range(self.n_iter):
             output = self.net_input(X)
             errors = y - output
-            self.weigth[1:] += self.rate * X.T.dot(errors)
+            self.weight[1:] += self.rate * X.T.dot(errors)
             self.weight[0] += self.rate * errors.sum()
             cost = (errors ** 2).sum() / 2.0
             self.cost.append(cost)
         return self
+
+    def net_input(self, X):
+        # Evaluate of clean input signal
+        return np.dot(X,self.weight[1:]) + self.weight[0]
+
+    def activation(self, X):
+        # Linear activation
+        return self.net_input(X)
+
+    def predict(self, X):
+        # Return class marker after single jump
+        return np.where(self.activation(X) >= 0.0, 1,-1)
+
+fig, ax = plt.subplots(nrows = 1, ncols = 2, figsize = (8,4))
+
+# learning rate = 0.01
+aln1 = AdaptiveLinearNeuron(0.01, 10).fit(X, y)
+ax[0].plot(range(1, len(aln1.cost) + 1), np.log10(aln1.cost), marker='o')
+ax[0].set_xlabel('Epoches')
+ax[0].set_ylabel('log(Summ of quadro errors)')
+ax[0].set_title('ADALINE. Speed of learning 0.01')
+
+# learning rate = 0.01
+aln2 = AdaptiveLinearNeuron(0.0001, 10).fit(X,y)
+
+ax[1].plot(range(1, len(aln2.cost) + 1), aln2.cost, marker='o')
+ax[1].set_xlabel('Epoches')
+ax[1].set_ylabel('Summ of quadro errors')
+ax[1].set_title('ADALINE. Speed of learning 0.0001')
+plt.show()
+
+X_std=np.copy(X)
+X_std[:, 0] = (X[:, 0] - X[:, 0].mean()) / X[:, 0].std()
+X_std[:, 1] = (X[:, 1] - X[:, 1].mean()) / X[:, 1].std()
+
+# learning rate = 0.01
+aln =AdaptiveLinearNeuron(0.01, 10)
+aln.fit(X_std, y)
+
+# Draw picture
+plot_decision_regions(X_std, y, classifier=aln)
+
+plt.title('ADALINE( gradient down')
+plt.xlabel('Length of cups [stnd]')
+plt.ylabel('Lenght of wings [stnd]')
+plt.legend(loc='upper left')
+plt.show()
+
+plt.plot(range(1, len(aln.cost) +1), aln.cost, marker='o')
+plt.xlabel('Epoches')
+plt.ylabel('Summ of quadro errors')
+plt.show()
+
