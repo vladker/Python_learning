@@ -91,11 +91,20 @@ class OurNeuralNetwork:
                 self.b3 -= learn_rate * d_L_d_ypred * d_ypred_d_b3
 
             # Подсчитываем общую  потерю в конце каждой фазы
-            if epoch % 10 ==0:
+            if epoch % 100 ==0:
                 y_pred = np.apply_along_axis(self.feedforward, 1, data)
                 loss = mse_loss(all_y_trues, y_pred)
                 print("Epoch %d loss: %.3f" % (epoch, loss))
-
+                print('w1=', self.w1)
+                print('w2=', self.w2)
+                print('b1=', self.b1)
+                print('w3=', self.w3)
+                print('w4=', self.w4)
+                print('b2=', self.b2)
+                print('w5=', self.w5)
+                print('w6=', self.w6)
+                print('b3=', self.b3)
+                print()
 # Определяем набор данных
 data = np.array([
     [-2, -1], # Alice
@@ -113,3 +122,9 @@ all_y_trues = np.array([
 # Training
 network = OurNeuralNetwork()
 network.train(data, all_y_trues)
+
+# Делаем предсказания
+emily = np.array([-7, -3]) # 128 фунтов, 63 дюйма
+frank = np.array([20, 2]) # 155 фунтов, 68 дюймов
+print("Emily: %.3f" % network.feedforward(emily))
+print("Frank: %.3f" % network.feedforward(frank))
