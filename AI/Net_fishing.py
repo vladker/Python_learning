@@ -21,12 +21,17 @@ ds.addSample([20, 11, 10, 5], [1])
 net = buildNetwork(4, 3, 1, bias=True)
 
 # Network training with visualization
-trainer = BackpropTrainer(net, dataset=ds, momentum=0.1, learningrate=0.01, verbose=True, weightdecay=0.01)
+
+trainer = BackpropTrainer(net, dataset=ds, momentum=0.1, learningrate=0.001, weightdecay=0.01)
 trnerr, valerr = trainer.trainUntilConvergence()
 plt.plot(trnerr, 'b', valerr, 'r')
 plt.show()
 
 # Save trained network to file
-fileObject = open('MyNer_Fish.txt', 'wb')
-pickle.dump(net, fileObject)
-fileObject.close()
+ask = input('Save model? y/n ')
+if input() == "y":
+    fileObject = open('MyNer_Fish.txt', 'wb')
+    pickle.dump(net, fileObject)
+    fileObject.close()
+else:
+    pass
