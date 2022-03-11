@@ -12,8 +12,8 @@ from pybrain3.structure import SoftmaxLayer
 from pybrain3.structure import TanhLayer
 
 # Create a dataset for training
-ds = SupervisedDataSet(4, 1)
-with open('training mature 2.csv', newline='') as csvfile:
+ds = SupervisedDataSet(3, 1)
+with open('H1RDBD.csv', newline='') as csvfile:
     data_csv = csv.reader(csvfile, delimiter=';')
     for row in data_csv:
         input=[]
@@ -24,11 +24,11 @@ with open('training mature 2.csv', newline='') as csvfile:
         ds.addSample(input,target)
 
 # Create structure of network
-net = buildNetwork(4, 3, 1, hiddenclass=SoftmaxLayer)
+net = buildNetwork(3, 2, 1, hiddenclass=SoftmaxLayer)
 print(net)
 
 # Network training with visualization
-trainer = BackpropTrainer(net, dataset=ds, momentum=0.1, learningrate=0.00000001, verbose=True, weightdecay=0.01)
+trainer = BackpropTrainer(net, dataset=ds, momentum=0.1, learningrate=0.0000001, verbose=True, weightdecay=0.01)
 trnerr, valerr = trainer.trainUntilConvergence(continueEpochs=10)
 plt.plot(trnerr, 'b', valerr, 'r')
 plt.show()
