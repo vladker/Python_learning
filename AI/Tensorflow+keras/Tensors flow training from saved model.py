@@ -41,7 +41,7 @@ print('b1:', b1)
 print('W2:', W2)
 print('b2:', b2)
 
-model.compile(loss='binary_crossentropy', optimizer=SGD(learning_rate=0.0001))
+model.compile(loss='msle', optimizer=Adam())
 
 # Параметры 1 уровня
 W1 = model.get_weights()[0]
@@ -57,7 +57,7 @@ print('W2:', W2)
 print('b2:', b2)
 
 print(model.summary())
-model.fit(X, y, batch_size=1, epochs=100, verbose=1)
+model.fit(X, y, batch_size=1, epochs=1000, verbose=1)
 
 model.save('C:/Users/rogac/PycharmProjects/Git/AI/Tensorflow+keras')
 print("[1, 1, 1]", model.predict(np.array([[1, 1, 1]])))

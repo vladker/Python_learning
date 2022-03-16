@@ -10,9 +10,9 @@ import logging
 import numpy as np
 
 model = Sequential()
-model.add(Dense(4, input_dim=3, activation='relu'))
+model.add(Dense(12, input_dim=3, activation='sigmoid'))
 model.add(Dense(1, activation='sigmoid'))
-model.compile(loss='binary_crossentropy', optimizer=SGD(learning_rate=0.001))
+model.compile(loss='binary_crossentropy', optimizer=SGD())
 print(model.summary())
 
 # Read to np array
@@ -33,7 +33,7 @@ for rows in file:
     X.append(input_list_X)
     y.append(input_list_y)
 
-model.fit(X, y, batch_size=1, epochs=1000, verbose=1)
+model.fit(X, y, batch_size=1, epochs=100, verbose=1)
 model.save('C:/Users/rogac/PycharmProjects/Git/AI/Tensorflow+keras')
 print("[1, 1, 1]", model.predict(np.array([[1, 1, 1]])))
 print("[0, 0, 0]", model.predict(np.array([[0, 0, 0]])))
